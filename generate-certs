@@ -2,7 +2,7 @@
 
 if [[ -z $SILENT ]]; then
 echo "----------------------------"
-echo "| OMGWTFSSL Cert Generator |"
+echo "|    SSL Cert Generator    |"
 echo "----------------------------"
 echo
 fi
