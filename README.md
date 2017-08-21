@@ -1,4 +1,4 @@
-OMGWTFSSL - Self Signed SSL Certificate Generator
+SSL - Self Signed SSL Certificate Generator
 =================================================
 
 About
@@ -6,15 +6,15 @@ About
 
 Sick of googling every time you need a self signed certificate?
 
-OMGWTFSSL is a small (< 8 mb) docker image based off `alpine linux` which makes creating self signed SSL certs easier.
+SSL is a small (< 8 mb) docker image based off `alpine linux` which makes creating self signed SSL certs easier.
 
 It will dump the certs it generators into `/certs` by default and will also output them to stdout in a standard
 YAML form making them easy to consume in Ansible or other tools that use YAML.
 
 ```
-docker run -e SSL_SUBJECT="example.com" paulczar/omgwtfssl
+docker run -e SSL_SUBJECT="example.com" paulczar/SSL
 ----------------------------
-| OMGWTFSSL Cert Generator |
+|    SSL Cert Generator    |
 ----------------------------
 
 --> Certificate Authority
@@ -191,7 +191,7 @@ _Creating web certs for testing SSL just got a hell of a lot easier..._
 Create Certificate:
 ```
 $ docker run -v /tmp/certs:/certs \
-  -e SSL_SUBJECT=test.example.com   paulczar/omgwtfssl
+  -e SSL_SUBJECT=test.example.com   paulczar/SSL
 ```
 
 Enable SSL in `/etc/nginx/sites-enabled/default`:
@@ -229,17 +229,17 @@ $ curl --cacert /tmp/certs/ca.pem https://test.example.com
 
 ### Create keys for docker registry
 
-_Slightly more interesting example of using `paulczar/omgwtfssl` as a volume container to build and host SSL certs for the Docker Registry image_
+_Slightly more interesting example of using `paulczar/SSL` as a volume container to build and host SSL certs for the Docker Registry image_
 
-Create the volume container for the registry from `paulczar/omgwtfssl`:
+Create the volume container for the registry from `paulczar/SSL`:
 
 ```
 $ docker run \
   --name certs \
   -e SSL_SUBJECT=test.example.com \
-  paulczar/omgwtfssl
+  paulczar/SSL
 ----------------------------
-| OMGWTFSSL Cert Generator |
+| SSL Cert Generator |
 ----------------------------
 
 --> Certificate Authority
@@ -277,7 +277,7 @@ $ docker run -d \
 Make sure it works:
 ```
 $ echo "127.0.2.1       test.example.com" >> /etc/hosts
-$ docker tag paulczar/omgwtfssl test.example.com:5000/omgwtfbbq
+$ docker tag paulczar/SSL test.example.com:5000/omgwtfbbq
 $ docker push test.example.com:5000/omgwtfbbq
 The push refers to a repository [test.example.com:5000/omgwtfbbq] (len: 1)
 e34964fe7cfa: Pushed
@@ -285,4 +285,4 @@ d52b82eb9ff3: Pushed
 6b030e7d76a6: Pushed
 8a648f689ddb: Pushed
 latest: digest: sha256:8a97202b0ad9b375ff478d84ed948ae7ddd298196fd3b341fc8391a0fe71345a size: 7617
-```    
+```
